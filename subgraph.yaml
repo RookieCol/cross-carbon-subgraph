@@ -1,0 +1,54 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Carbon
+    network: mumbai
+    source:
+      address: "0xCfca158FBA6bF554dD03838aB56869758DB44C02"
+      abi: Carbon
+      startBlock: 41506404
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - BougthCarbonCredits
+        - BougthCarbonCreditsCrosschain
+        - GroceryCarbonFootprintOffset
+        - OwnershipTransferred
+        - RetiredCarbonCredits
+        - RetiredCarbonCreditsCrosschain
+        - Transfer
+        - TransferCrosschain
+        - TransferFromCrosschain
+        - TravelCarbonFootprintOffset
+      abis:
+        - name: Carbon
+          file: ./abis/Carbon.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: BougthCarbonCredits(indexed address,uint256)
+          handler: handleBougthCarbonCredits
+        - event: BougthCarbonCreditsCrosschain(indexed address,uint256,string)
+          handler: handleBougthCarbonCreditsCrosschain
+        - event: GroceryCarbonFootprintOffset(indexed bytes32,string,string,string,uint256,uint256,uint256,uint256,address)
+          handler: handleGroceryCarbonFootprintOffset
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: RetiredCarbonCredits(indexed address,uint256,uint256)
+          handler: handleRetiredCarbonCredits
+        - event: RetiredCarbonCreditsCrosschain(indexed address,uint256,string)
+          handler: handleRetiredCarbonCreditsCrosschain
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: TransferCrosschain(indexed address,indexed address,uint256,string)
+          handler: handleTransferCrosschain
+        - event: TransferFromCrosschain(indexed address,indexed address,indexed address,uint256,string)
+          handler: handleTransferFromCrosschain
+        - event: TravelCarbonFootprintOffset(indexed bytes32,string,string,uint256,uint256,uint256,address)
+          handler: handleTravelCarbonFootprintOffset
+      file: ./src/carbon.ts
